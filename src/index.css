@@ -1,3 +1,36 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base{
+    h1{
+        @apply text-5xl
+    }
+    h2{
+        @apply text-4xl
+    }
+    h3{
+        @apply text-3xl
+    }
+    h4{
+        @apply text-2xl
+    }
+    h5{
+        @apply text-xl
+    }
+}
+
+@layer components{
+    .padding {
+        @apply lg:px-28
+    }
+    .text-primary{
+        @apply  text-[#F63E7B]
+    }
+    .bg-primary{
+        @apply  bg-[#F63E7B]
+    }
+    .btn-primary{
+        @apply bg-[#F63E7B] py-3 text-white
+    }
+}
