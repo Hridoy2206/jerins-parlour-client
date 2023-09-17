@@ -1,38 +1,46 @@
 
-import CustomBtn from "../../../components/CustomBtn/CustomBtn";
-import CustomLoading from "../../../components/CustomBtn/CustomLoading";
+import CustomLoading from "../../../components/CustomLoading";
 import { useGetServices } from "../../../hook/useCustomFatchingData";
+import ServiceCart from "../../../components/ServiceCart";
+import { useState } from "react";
 const OurServices = () => {
 
-    const { isLoading, data } = useGetServices('services', 'http://localhost:5000/services')
+    const { isLoading, isError, data } = useGetServices('services', 'http://localhost:5000/service');
+    const [moreService, setMoreService] = useState([]);
+    const [moreServiceLoading, setMoreServiceLoading] = useState(false)
 
-    if (isLoading) {
+    if (isLoading || moreServiceLoading) {
         return <CustomLoading />
+    }
+    if (isError) {
+        console.log(isError);
+    }
+    const handleMoreServices = () => {
+        setMoreServiceLoading(true)
+        fetch('http://localhost:5000/service?moreService=true')
+            .then(res => res.json())
+            .then(result => {
+                if (result.success) {
+                    setMoreService(result.moreService);
+                    setMoreServiceLoading(false)
+                }
+            })
     }
 
     return (
         <section className="my-20" id="services">
             <h2 className='text-center font-medium'>Our Awasome <span className='text-primary'>Services</span></h2>
 
-            <div className="lg:padding grid lg:grid-cols-3 gap-5 mt-16 mb-10 px-4">
+            <div className="lg:padding grid lg:grid-cols-3 gap-5 mt-16 mb-10 px-4 ">
                 {
-                    data?.map((service, index) => <div
-                        key={service._id}
-                        className={index === 1 ? 'shadow-xl rounded-md' : ''}
-                    >
-                        <div className=" p-8 text-center space-y-2">
-                            <img className="w-16 mx-auto" src={service.image} alt="" />
-                            <h5 className="font-medium">{service.title}</h5>
-                            <p className="text-primary font-medium">$ {service.price}</p>
-                            <p className="text-[#555]">{service.discription}</p>
-                        </div>
-                    </div>
-                    )
-
+                    data?.map((service, index) => <ServiceCart key={service._id} service={service} index={index} />)
+                }
+                {
+                    moreService.map((service) => <ServiceCart key={service._id} service={service} />)
                 }
             </div>
             <div className="text-center">
-                <CustomBtn>Explore More</CustomBtn>
+                <button onClick={handleMoreServices} className="btn-primary">Explore More</button>
             </div>
         </section>
     );

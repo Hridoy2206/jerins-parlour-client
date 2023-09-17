@@ -22,7 +22,7 @@
 
 @layer components{
     .padding {
-        @apply lg:px-28
+        @apply lg:px-40
     }
     .text-primary{
         @apply  text-[#F63E7B]
@@ -30,7 +30,19 @@
     .bg-primary{
         @apply  bg-[#F63E7B]
     }
+    
     .btn-primary{
-        @apply bg-[#F63E7B] py-3 text-white
+        @apply bg-[#F63E7B] lg:py-3 py-2 text-white active:scale-95 duration-300 rounded-md px-10
     }
+    .input{
+        @apply border outline-none rounded-lg py-3 px-2
+    }
+    
+    .error{
+        @apply text-sm text-red-500 font-semibold
+    }
+
 }
+.active {
+    color: #F63E7B /*//* Your desired style for the active link */
+  }

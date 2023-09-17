@@ -1,16 +1,43 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BsFacebook } from 'react-icons/bs'
 import { FcGoogle } from 'react-icons/fc'
 import { useForm } from "react-hook-form";
+import { useAuthState, useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import auth from "../../firebase.init";
+import toast from "react-hot-toast";
+import { useState } from "react";
+import CustomLoading from "../../components/CustomLoading";
 
 const Login = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm()
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const [signInWithEmailAndPassword, user, loading, error,] = useSignInWithEmailAndPassword(auth);
+    const [firebaseError, setFirebaseError] = useState('')
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [currentUser, currentLoading] = useAuthState(auth)
 
-    const handleLogin = (data) => {
-        console.log(data);
+    const from = location.state?.from?.pathname || '/'
+
+    if (loading || currentLoading) {
+        return <CustomLoading />
+    }
+    if (error && !firebaseError) {
+        setFirebaseError(error?.message);
+    }
+
+    console.log(currentUser);
+    const handleLogin = async (data) => {
+        const user = await signInWithEmailAndPassword(data.email, data.password);
+        if (user) {
+            toast.success('Login Successfully!')
+            navigate(from, { replace: true })
+        } else {
+            // toast.error(error?.message)
+        }
+
     }
     return (
-        <section className="lg:w-[500px] mx-auto lg:px-0 px-4 my-12">
+        <section className="lg:w-[500px] mx-auto lg:px-0 px-4 my-12 h-screen">
             <form onSubmit={handleSubmit(handleLogin)} className="lg:px-10 px-4 py-6 border border-gray-300">
                 <h2 className="text-center text-3xl font-semibold mb-6">Login</h2>
                 <div className="flex flex-col space-y-6 text-[#222]">
@@ -46,6 +73,8 @@ const Login = () => {
                         type="submit"
                         value="Login"
                     />
+                    {firebaseError && <p className="text-red-500">{firebaseError}</p>}
+
                     <div className="text-center font-semibold">
                         <p>Don't have an account? <Link className="underline text-primary" to='/register'>Register</Link></p>
                     </div>
