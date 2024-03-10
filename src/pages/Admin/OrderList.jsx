@@ -1,8 +1,7 @@
-import React from 'react';
 
 const OrderList = () => {
     return (
-        <div>
+        <div className='h-screen'>
             Order List
         </div>
     );

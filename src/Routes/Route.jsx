@@ -1,20 +1,22 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
-import About from "../pages/About/About";
 import Home from "../pages/Home/Home/Home";
 import Contact from "../pages/Home/Contact/Contact";
-import Dashboard from "../pages/Home/Dashboard/Dashboard";
-import Bookings from "../pages/Home/Dashboard/Bookings/Bookings";
-import Review from "../pages/Home/Dashboard/Review";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 import RequireAuth from "../pages/Auth/RequireAuth";
 import Admin from "../pages/Admin/Admin";
 import AdService from "../pages/Admin/AdService";
 import OrderList from "../pages/Admin/OrderList";
-import ManageUser from "../pages/Admin/ManageUser";
-import ManageService from "../pages/Admin/ManageService";
-import Cart from "../pages/Home/Dashboard/Cart";
+import RequireAdmin from "../pages/Auth/RequireAdmin";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import Cart from "../pages/Dashboard/Cart";
+import Bookings from "../pages/Dashboard/Bookings";
+import Review from "../pages/Dashboard/Review";
+import ManageUser from "../pages/Admin/ManageUser/ManageUser";
+import Payment from "../pages/Dashboard/Payment/Payment";
+import ManageService from "../pages/Admin/ManageServices/ManageService";
+import EditService from "../pages/Admin/ManageServices/EditService";
 
 export const router = createBrowserRouter([
     {
@@ -24,10 +26,6 @@ export const router = createBrowserRouter([
             {
                 index: true,
                 element: <Home />
-            },
-            {
-                path: 'about',
-                element: <About />
             },
             {
                 path: 'contact-us',
@@ -58,11 +56,15 @@ export const router = createBrowserRouter([
                         path: 'review',
                         element: <Review />
                     },
+                    {
+                        path: 'payment/:id',
+                        element: <Payment />
+                    },
                 ]
             },
             {
-                path: 'admin',
-                element: <Admin />,
+                path: '/admin',
+                element: <RequireAdmin><Admin /></RequireAdmin>,
                 children: [
                     {
                         index: true,
@@ -79,8 +81,18 @@ export const router = createBrowserRouter([
                     },
                     {
                         path: 'manage-service',
-                        element: <ManageService />
+                        element: <ManageService />,
+                        children: [
+                            {
+                                path: 'edit-service/:id',
+                                element: <EditService />
+                            }
+                        ]
                     },
+                    // {
+                    //     path: 'edit-service',
+                    //     element: <EditService />
+                    // }
                 ]
             }
         ]

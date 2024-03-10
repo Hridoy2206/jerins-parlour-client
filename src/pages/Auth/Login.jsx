@@ -25,7 +25,6 @@ const Login = () => {
         setFirebaseError(error?.message);
     }
 
-    console.log(currentUser);
     const handleLogin = async (data) => {
         const user = await signInWithEmailAndPassword(data.email, data.password);
         if (user) {

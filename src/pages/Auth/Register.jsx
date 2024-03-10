@@ -3,11 +3,12 @@ import { BsFacebook } from 'react-icons/bs'
 import { FcGoogle } from 'react-icons/fc'
 import { useForm } from "react-hook-form";
 import auth from "../../firebase.init";
-import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from "react-firebase-hooks/auth";
+import { useAuthState, useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from "react-firebase-hooks/auth";
 import CustomLoading from "../../components/CustomLoading";
 import { fetchPostData } from "../../hook/useCustomFatchingData";
 import toast from "react-hot-toast";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { Menu } from "../../ContextAPI/GlobalStateManagment";
 
 const Register = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
@@ -16,6 +17,8 @@ const Register = () => {
     const [updateProfile, updating, updateError] = useUpdateProfile(auth);
     const [updatedLoading, setUpdateLoading] = useState(false);
     const [firebaseError, setFirebaseError] = useState("");
+    const { setDatabaseuser } = useContext(Menu);
+    const [user] = useAuthState(auth)
     console.log(firebaseError);
 
     const navigate = useNavigate()
@@ -48,6 +51,7 @@ const Register = () => {
                 setUpdateLoading(false)
                 if (result.acknowledged) {
                     setFirebaseError('')
+                    setDatabaseuser(user)
                     navigate('/');
                     toast.success('User Created Successfully!');
                     reset();

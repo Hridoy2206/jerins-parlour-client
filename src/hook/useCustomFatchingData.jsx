@@ -30,3 +30,23 @@ export const fetchPostData = (url, data) => {
         })
 }
 
+export const useUpdateData = (key, url) => {
+    const { isLoading, isError, data, refetch } = useQuery(key, () =>
+        fetch(`http://localhost:5000${url}`, {
+            method: 'PATCH',
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify({ data })
+        })
+            .then(res => res.json())
+    )
+    return { isLoading, isError, data, refetch }
+}
+
+export const hashRoute = (hashId) => {
+    const routeId = document.getElementById(hashId);
+    if (routeId) {
+        routeId.scrollIntoView({ behavior: 'smooth' });
+    }
+}

@@ -1,3 +1,5 @@
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "../../../firebase.init";
 import Contact from "../Contact/Contact";
 import HappyCustomer from "../HappyCustomer/HappyCustomer";
 import Hero from "../Hero/Hero";

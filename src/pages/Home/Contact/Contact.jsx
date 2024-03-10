@@ -3,12 +3,12 @@ import ContactInput from "./ContactInput";
 
 const Contact = () => {
     return (
-        <section className="bg-[#FFF8F5]  py-16 px-4 lg:px-0" id="contact-us">
+        <section className="bg-[#FFF8F5]  py-16 px-4 lg:px-0" id="contact-us" >
             <h2 className="font-semibold text-3xl lg:text-5xl text-center mb-10">
                 Let us handle your <br className="hidden lg:block" />
                 project, professionally.
             </h2>
-            <form className=" lg:w-[630px] mx-auto">
+            <form className=" lg:w-[630px] mx-auto" data-aos="zoom-in" >
                 <div className="grid lg:grid-cols-2 gap-5">
                     {/*//*----- Input First Name----- */}
                     <ContactInput type={'text'} placeholder={"First name"} />

@@ -2,10 +2,10 @@ import serviceImg from "../../../assets/images/serviceImg.png"
 const HappyCustomer = () => {
     return (
         <section className="lg:flex gap-16 space-y-6 lg:space-y-0 lg:padding bg-[#FFF8F5] py-32 px-4">
-            <div className="w-2/1  ">
+            <div className="w-2/1" data-aos="fade-right">
                 <img className="hover:scale-95 duration-300" src={serviceImg} alt="" />
             </div>
-            <div className="lg:space-y-8 space-y-4 lg:relative text-center lg:text-left w-2/1">
+            <div className="lg:space-y-8 space-y-4 lg:relative text-center lg:text-left w-2/1" data-aos="fade-left">
                 <h2 className="font-semibold ">
                     Let us handle your <br className="lg:block hidden" /> screen <span className="text-[#F63E7B]">Professionally</span>.
                 </h2>
